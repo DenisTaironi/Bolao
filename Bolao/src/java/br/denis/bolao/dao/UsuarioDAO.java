@@ -13,9 +13,11 @@ public class UsuarioDAO {
     public void salvar(Usuario usuario) {
         try {
             Connection con = FabricaConexao.getCon();
-            PreparedStatement ps = con.prepareCall("INSERT...");
+            PreparedStatement ps = con.prepareStatement("INSERT...");
             ps.setString(1, usuario.getLogin());
             ps.setString(2, usuario.getSenha());
+            ps.setInt(3, usuario.getPalpite1());
+            ps.setInt(4, usuario.getPalpite2());
             
             ps.execute();
             FabricaConexao.fecharConexao();

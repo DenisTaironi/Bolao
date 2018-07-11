@@ -9,16 +9,24 @@
     <h:body>
         <h:form>
             <p:panelGrid columns="2">
-            <h:outputLabel for='login' value='Login'></h:outputLabel>
-            <p:inputText id='login' value='#{usuarioBean.login}' ></p:inputText>
-            
-            <h:outputLabel for='senha' value='Senha'></h:outputLabel>
-            <p:password id='senha' value='#{usuarioBean.senha}'></p:password>
-            
-            <p:button value='Cadastrar'></p:button>
-            <p:commandButton value='Logar' action='#{usuarioBean.dizerOla()}' update='msg'></p:commandButton>
-            <h:outputText id='msg' value='#{usuarioBean.msg}'></h:outputText>
+                <h:outputLabel for='login' value='Login'></h:outputLabel>
+                <p:inputText id='login' value='#{usuarioBean.usuario.login}' ></p:inputText>
+
+                <h:outputLabel for='senha' value='Senha'></h:outputLabel>
+                <p:password id='senha' value='#{usuarioBean.usuario.senha}'></p:password>
+
+                <p:button value='Cadastrar'></p:button>
             </p:panelGrid>
+            <p:toolbar>
+                <p:toolbarGroup>
+                    <p:commandButton value='Logar' action='#{usuarioBean.adicionarUsuario()}' update="@form"></p:commandButton>
+                </p:toolbarGroup>
+            </p:toolbar>
+            <p:dataTable value="#{usuarioBean.usuarios}" var="usuario">
+                <p:column headerText="Modelo">
+                    <h:outputText value="#{usuario.login}"></h:outputText>
+                </p:column>
+            </p:dataTable>
         </h:form>
     </h:body>
 </html>

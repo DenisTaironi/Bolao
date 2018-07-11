@@ -13,7 +13,7 @@ public class UsuarioBean {
     private Usuario usuario = new Usuario();
     private List<Usuario> usuarios = new ArrayList<>();
 
-    public void adicionar() {
+    public void adicionarUsuario() {
         usuarios.add(usuario);
         usuario = new Usuario();
     }
