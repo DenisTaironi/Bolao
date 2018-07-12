@@ -1,41 +1,41 @@
 package br.denis.bolao.util;
 
+import br.denis.bolao.util.exception.ErroSistema;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class FabricaConexao {
+    
+    private static Connection conexao;
+    private static final String URL_CONEXAO = "jdbc:postgresql://localhost/bolao";
+    private static final String USUARIO = "postgres";
+    private static final String SENHA = "260388";
 
-    private static Connection con;
-    private static final String URL_CONNECTION = "jdbc:postresql://localhost/bolao";
-    private static final String USER = "root";
-    private static final String PASS = "root";
-
-    public static Connection getCon() {
-        if (con == null) {
+    public static Connection getConexao() throws ErroSistema {
+        if(conexao == null){
             try {
-                Class.forName("com.postgresql.jdbc.Driver");
-                con = DriverManager.getConnection(URL_CONNECTION, USER, PASS);
+                Class.forName("org.postgresql.Driver");
+                conexao = DriverManager.getConnection(URL_CONEXAO, USUARIO, SENHA);
+            } catch (SQLException ex) {
+                throw new ErroSistema("Não foi possível conectar ao banco de dados!", ex);
             } catch (ClassNotFoundException ex) {
-                Logger.getLogger(FabricaConexao.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (SQLException ex) {
-                Logger.getLogger(FabricaConexao.class.getName()).log(Level.SEVERE, null, ex);
+                throw new ErroSistema("O driver do banco de dados não foi encontrado!", ex);
             }
         }
-        return con;
+        return conexao;
     }
-
-    public static void fecharConexao() {
-        if (con != null) {
+    
+    public static void fecharConexao() throws ErroSistema{
+        if(conexao != null){
             try {
-                con.close();
-                con = null;
+                conexao.close();
+                conexao = null;
             } catch (SQLException ex) {
-                Logger.getLogger(FabricaConexao.class.getName()).log(Level.SEVERE, null, ex);
+                throw new ErroSistema("Erro ao fechar conexão com o banco de dados!", ex);
             }
         }
     }
-
+    
+    
 }

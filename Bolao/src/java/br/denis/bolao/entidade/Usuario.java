@@ -1,12 +1,21 @@
 package br.denis.bolao.entidade;
 
+import java.util.Objects;
+
 public class Usuario {
     
+    private Integer id;
     private String login;
     private String senha;
-    private int palpite1;
-    private int palpite2;
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+        
     public String getLogin() {
         return login;
     }
@@ -22,21 +31,26 @@ public class Usuario {
     public void setSenha(String senha) {
         this.senha = senha;
     }
-
-    public int getPalpite1() {
-        return palpite1;
+   
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 53 * hash + Objects.hashCode(this.id);
+        return hash;
     }
 
-    public void setPalpite1(int palpite1) {
-        this.palpite1 = palpite1;
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Usuario other = (Usuario) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        return true;
     }
-
-    public int getPalpite2() {
-        return palpite2;
-    }
-
-    public void setPalpite2(int palpite2) {
-        this.palpite2 = palpite2;
-    }
-    
 }
